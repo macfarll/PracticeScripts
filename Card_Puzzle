@@ -1,0 +1,101 @@
+import random
+arr=[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+deck=list()
+solution=0
+isValid=0
+
+def checkGuts(i,j):
+    global isValid
+    tempvalue = arr[i][j]
+    neighbors = (arr[i+1][j],arr[i-1][j],arr[i][j+1],arr[i][j-1])
+    if i == 4:
+        if j == 4:
+            if isValid == 0:
+                print "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                Reveal()
+                print isValid
+                solution=1
+                global solution
+                return
+        
+    if tempvalue == 1:
+        if 1 in neighbors:
+            print "neightbor aces"
+            isValid+=1
+            return
+        if 3 in neighbors:
+            print "ace and queen"
+            isValid+=1
+            return
+        if 2 in neighbors:
+            pass
+        else:
+            print "ace missing king"
+            isValid+=1
+            return
+    elif tempvalue == 2:
+        if 2 in neighbors:
+            print "pair kings"
+            isValid+=1
+            return
+        if 3 in neighbors:
+            pass
+        else:
+            print "king missing queen"
+            isValid+=1
+            return
+    elif tempvalue == 3:
+        if 3 in neighbors:
+            print "pair queens"
+            isValid+=1
+            return
+        if 4 in neighbors:
+             pass
+        else:
+             print "queen missing jack"
+             isValid+=1
+             return
+    elif tempvalue == 4:
+        if 4 in neighbors:
+            print "pair jacks"
+            isValid+=1
+            return
+
+def Check():
+    global isValid
+    isValid=0
+    for i in range(1,5):
+        for j in range(1,5):
+            checkGuts(i,j)
+            exit
+
+def Build():
+    deck = list()
+    for i in range(1,5):
+        deck.append(i)
+        deck.append(i)
+    arr[1][3] = random.choice(deck)
+    deck.remove(arr[1][3])
+    arr[2][1] = random.choice(deck)
+    deck.remove(arr[2][1])
+    arr[2][2] = random.choice(deck)
+    deck.remove(arr[2][2])
+    arr[2][3] = random.choice(deck)
+    deck.remove(arr[2][3])
+    arr[3][2] = random.choice(deck)
+    deck.remove(arr[3][2])
+    arr[3][3] = random.choice(deck)
+    deck.remove(arr[3][3])
+    arr[3][4] = random.choice(deck)
+    deck.remove(arr[3][4])
+    arr[4][3] = random.choice(deck)
+    Check()
+    
+def Reveal():
+    for i in range(0,len(arr)):
+        print arr[i],"\n"
+
+while solution==0:
+    Build()
+
+
